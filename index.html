@@ -6,7 +6,22 @@
     <title>Document</title>
 
 </head>
-<body style="margin: 0; padding: 0">
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    main {
+        flex: 1;
+    }
+    footer {
+        flex-shrink: 0;
+        margin-top: auto;
+    }
+
+</style>
+<body style="margin: 0; padding: 0;">
     <header style="background-color: antiquewhite; padding: 1vw;">
         <ul class="main_ul" style="display:flex; gap: 70vw; margin-left: 4vw;   margin-right: 4vw; padding: 0; list-style-type: none ; list-style: none;" >
                 <li><a>Logo</a></li>
@@ -22,7 +37,7 @@
         <section style="margin-bottom: 13.8vw;">
             <h1 style="display: flex; justify-content: center;">Articles</h1>
             <div>
-                <span><img src="/img/Снимок экрана 2026-03-18 163941.png"></span>
+                <span><img src="assets/img/Снимок экрана 2026-03-18 163941.png"></span>
                 <p>Статья 1</p>
             </div>
             

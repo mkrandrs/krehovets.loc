@@ -1,14 +1,26 @@
 from webob import Request, Response
+
+from whitenoise import WhiteNoise
+
 import routes
 import handlers
 
 class API:
-    def __init__(self):
+    def __init__(self, static_dir="assets"):
         self.routes = routes.routes
+        self.whitenoise = WhiteNoise(self.wsgi_app, root=static_dir)
 
     def __call__(self, environ, start_response):
         requet = Request(environ)
         response = self.handle_request(requet)
+        return response(environ, start_response)
+
+    def wsgi_app(self, environ, start_response):
+        request = Request(environ)
+
+        response = self.handle_request(request)
+
+        return response(environ, start_response)
 
 
 
