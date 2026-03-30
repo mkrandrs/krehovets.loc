@@ -1,62 +1,17 @@
+from views.view import View
+from controller.controller import Controller
+from services.db import Db
 
-
-class SiteController:
-    def index(self, request, response):
-        response.text = '''
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-</head>
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    main {
-        flex: 1;
-    }
-    footer {
-        flex-shrink: 0;
-        margin-top: auto;
-    }
-
-</style>
-<body style="margin: 0; padding: 0;">
-    <header style="background-color: antiquewhite; padding: 1vw;">
-        <ul class="main_ul" style="display:flex; gap: 70vw; margin-left: 4vw;   margin-right: 4vw; padding: 0; list-style-type: none ; list-style: none;" >
-                <li><a>Logo</a></li>
-            <div class="main_li" style="display: flex; gap: 5vw;">
-                <li><a>Home</a></li>
-                <li><a>About</a></li>
-                <li><a href="https://ксипт.рф" style="text-decoration: none; color: black">Article</a></li>
-            </div>
-        </ul>
-    </header>
-
-    <main>
-        <section style="margin-bottom: 13.8vw;">
-            <h1 style="display: flex; justify-content: center;">Articles</h1>
-            <div>
-                <span><img src="img/Снимок экрана 2026-03-18 163941.png"></span>
-                <p>Статья 1</p>
-            </div>
-            
-        </section>
-    </main>
-
-    <footer style="background-color: burlywood; padding: 1vw;">
-        <p style="display:flex; justify-content: center">Все права защищены 2026г.</p>
-    </footer>
+class SiteController(Controller):
     
 
+    def index(self, request, response):
 
-</body>
-</html>
-        '''
+        response.text = self.view.render_html('site/index.html', {'title' : 'MVC фреймворк', 'h1' : 'Главная страница'})
+
     def about(self, request, response):
-        response.text = "Страница о нас"
+        response.text = self.view.render_html('site/about.html', {'title' : 'О нас', 'h1' : 'Вы на странице "о нас"'})
+    
+    def hello(self, request, response, user_name):
+        response.text = self.view.render_html('site/hello.html', {'title' : 'Вы пользователь', 'h1' : 'Страница пользователя', 'user' : user_name})
+        
