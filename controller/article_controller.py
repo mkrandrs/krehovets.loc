@@ -2,6 +2,7 @@ from views.view import View
 from controller.controller import Controller
 from models.article import Article
 from services.db import Db
+from exceptions import NotFoundException
 
 class ArticlesController(Controller):
     
@@ -16,9 +17,8 @@ class ArticlesController(Controller):
     def view(self, request, response, id):
         article = Article.get_by_id(id)
         if article is None:
-            response.status_code = 404
-            response.text = self.view.render_html('errors/404.html', {'error' : 'Статья не найдена'})
-            return
+            raise NotFoundException('Статья не найдена')
+
             
             
         response.text = self.view.render_html('articles/view.html', {'title' : f'MVC фреймворк - {article.get_name()}', 'h1' : f'Статья: {article.get_name()}', 'article' : article})
@@ -26,9 +26,9 @@ class ArticlesController(Controller):
     def edit(self, request, response, id):
         article = Article.get_by_id(id)
         if article is None:
-            response.status_code = 404
-            response.text = self.view.render_html('errors/404.html', {'error' : 'Статья не найдена'})
+            raise NotFoundException('Статья не найдена')
             return
+        
         if request.method == 'POST':
             article.set_name(request.POST['name'])
             article.set_text(request.POST['text'])
@@ -50,8 +50,7 @@ class ArticlesController(Controller):
     def delete(self, request, response, id):
         article = Article.get_by_id(id)
         if article is None:
-            response.status_code = 404
-            response.text = self.view.render_html('errors/404.html', {'error' : 'Статья не найдена'})
+            raise NotFoundException('Статья не найдена')
             return
         
         article.delete()

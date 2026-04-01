@@ -1,6 +1,7 @@
 import os
 import re
-
+from exceptions import NotFoundException
+from views.view import View
 from webob import Request, Response
 
 from whitenoise import WhiteNoise
@@ -50,19 +51,29 @@ class API:
 
     def handle_request(self, request):
         response = Response()
+        
+        try:
+            result = self.find_handler_re(request_path=request.path)
+        
+            request_url = request.environ.get("REQUEST_URI")
 
-        request_url = request.environ.get("REQUEST_URI")
+            result = self.find_handler_re(request_path=request.path)
+            if result is None:
+                raise NotFoundException('Страница не найдена')
 
-        result = self.find_handler_re(request_path=request.path)
-        if result is not None:
             handler, params = result
             controller = handler[0]()
             action = handler[1]
             action(controller, request, response, *params)
-        else:
-            self.default_response(response)
-        # response.text = f"Привет, ты запросил страницу {request_url}"
+        
+        except NotFoundException as e:
+            response.status_code = 404
+            response.text = View('default').render_html('errors/404.html', {'error' : e})
+            
+            # response.text = f"Привет, ты запросил страницу {request_url}"
+
         return response
+    
     def find_handler(self, request_path):
         for path, handler in self.routes.items():
             if path == request_path:
