@@ -33,11 +33,32 @@ class ArticlesController(Controller):
             article.set_name(request.POST['name'])
             article.set_text(request.POST['text'])
             article.save()
+            response.status_code = 302
+            response.headers = [('Location', f'/article/{article.get_id()}')]
+            return
 
         response.text = self.view.render_html('articles/edit.html', {'title' : f'Редактирование - {article.get_name()}', 'article' : article})
     
+    def add(self, request, response):
+        article = Article()
+        article.set_author_id(1)
+        article.set_name('Новая статья')
+        article.set_text('dsadsa')
+
+        article.save()
+
+    def delete(self, request, response, id):
+        article = Article.get_by_id(id)
+        if article is None:
+            response.status_code = 404
+            response.text = self.view.render_html('errors/404.html', {'error' : 'Статья не найдена'})
+            return
+        
+        article.delete()
+        response.status_code = 302
+        response.headers = [('Location', '/articles')]
+
     
-
-
+    
 
 

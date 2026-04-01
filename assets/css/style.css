@@ -48,3 +48,54 @@
         display:flex;
         justify-content: center
     }
+
+
+    /* forms */
+
+    /* articles.html */
+
+    ul  {
+        display:flex;
+        gap: 20px;
+        list-style: none;
+    }
+
+    .article {
+        width: 20vw;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+        background: #f9f9f9;
+    }
+
+    hr {
+        margin: 0;
+    }
+
+    /* edit.html */
+
+input , textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box ;
+}
+textarea {
+    min-height: 120px;
+}
+
+.input_button {
+    background: antiquewhite;
+    color: black;
+    border:none;
+    padding:8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input_button:hover {
+    background: rgb(235, 220, 202);
+}
+
+
+
