@@ -1,6 +1,7 @@
 from controller.site_controller import SiteController
 # from controller.TestController import TestController
 from controller.article_controller import ArticlesController
+from controller.users_controller import UsersController
 
 routes = {
     # "/home" :  [SiteController, SiteController.index],
@@ -13,7 +14,9 @@ routes = {
     r"^/articles/(\d+)/delete$" : [ArticlesController, ArticlesController.delete],
     r"^/articles$" : [ArticlesController, ArticlesController.index],
     r"^/articles/add$" : [ArticlesController, ArticlesController.add],
+    r"^/user/register$" : [UsersController, UsersController.sign_up],
     r"^/home$" : [SiteController, SiteController.index],
     r"^/about$" : [SiteController, SiteController.about],
     r"^/hello/(.*)$" : [SiteController, SiteController.hello],
+    
 }

@@ -1,4 +1,5 @@
 from models.active_record_entity import ActiveRecordEntity
+from models.user import User
 
 class Article(ActiveRecordEntity):
     # __tablename__ = 'articles'
@@ -10,6 +11,11 @@ class Article(ActiveRecordEntity):
     _text = None
     _create_at = None
 
+
+
+    def get_author(self):
+        return User.get_by_id(self._id)
+    
     def get_author_id(self):
         return self._author_id
     
