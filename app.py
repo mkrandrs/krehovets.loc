@@ -3,11 +3,16 @@ import re
 from exceptions import NotFoundException
 from views.view import View
 from webob import Request, Response
+from exceptions import UnauthorizedException
+
 
 from whitenoise import WhiteNoise
 
 import routes
 import handlers
+
+
+
 
 class API:
     def __init__(self, static_dir="assets"):
@@ -62,13 +67,17 @@ class API:
                 raise NotFoundException('Страница не найдена')
 
             handler, params = result
-            controller = handler[0]()
+            controller = handler[0](request)
             action = handler[1]
             action(controller, request, response, *params)
         
         except NotFoundException as e:
             response.status_code = 404
             response.text = View('default').render_html('errors/404.html', {'error' : e})
+        
+        except UnauthorizedException as e:
+            response.status_code = 401
+            response.text = View('default').render_html('errors/401.html', {'error' : e})
             
             # response.text = f"Привет, ты запросил страницу {request_url}"
 

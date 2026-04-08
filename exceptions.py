@@ -5,3 +5,6 @@ class NotFoundException(Exception):
 
 class InvalidArgumentException(Exception):
     pass
+
+class UnauthorizedException(Exception):
+    pass

@@ -16,8 +16,14 @@ routes = {
     r"^/articles/add$" : [ArticlesController, ArticlesController.add],
     r"^/user/register$" : [UsersController, UsersController.sign_up],
     r"^/user/login$" : [UsersController, UsersController.sign_in],
+    r"^/user/logout$" : [UsersController, UsersController.logout],
     r"^/home$" : [SiteController, SiteController.index],
     r"^/about$" : [SiteController, SiteController.about],
     r"^/hello/(.*)$" : [SiteController, SiteController.hello],
+    # r"^/users$" : [UsersController, UsersController.users],
+
+
+
+    # Сделать чтобы /users - выдавало всех существующих user - их email, login
     
 }

@@ -19,6 +19,13 @@
                 <li><a>Home</a></li>
                 <li><a>About</a></li>
                 <li><a href="https://ксипт.рф">Article</a></li>
+                <li>
+                    {% if user %}
+                    {{ user.get_nickname() }} <a href="/user/logout">Выход</a>
+                    {% else %}
+                    <a href="/user/login">Войти</a>
+                    {% endif %}
+                </li>
             </div>
         </ul>
     </header>

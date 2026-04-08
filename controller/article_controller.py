@@ -4,13 +4,14 @@ from models.article import Article
 from models.user import User
 from services.db import Db
 from exceptions import NotFoundException
+from exceptions import UnauthorizedException
 
 class ArticlesController(Controller):
     
 
     def index(self, request, response):
         articles = Article.find_all()
-        response.text = self.view.render_html('articles/articles.html', {'title' : 'MVC фреймворк ', 'h1' : 'Статья: ', 'articles' : articles})
+        response.text = self.view.render_html('articles/articles.html', {'title' : 'MVC фреймворк ', 'h1' : 'Статья: ', 'articles' : articles })
 
     # def about(self, request, response):
     #     response.text = self.view.render_html('site/about.html', {'title' : 'О нас', 'h1' : 'Вы на странице "о нас"'})
@@ -31,6 +32,9 @@ class ArticlesController(Controller):
             raise NotFoundException('Статья не найдена')
             return
         
+        if self.user is None:
+            raise UnauthorizedException('Необходимо авторизоваться')
+
         if request.method == 'POST':
             article.set_name(request.POST['name'])
             article.set_text(request.POST['text'])

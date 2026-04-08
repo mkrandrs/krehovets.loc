@@ -34,12 +34,16 @@ class UsersController(Controller):
                     response.location = '/articles'
                     return
             except InvalidArgumentException as e:
-                response.text = self.view.render_html('users/sign_in.html', {'title' : 'MVC фреймворк - Регистрация ', 'user' : request.POST ,'error' : e})
+                response.text = self.view.render_html('users/sign_in.html', {'title' : 'MVC фреймворк - Регистрация ', 'user_data' : request.POST ,'error' : e})
                 return
         
 
         response.text = self.view.render_html('users/sign_in.html', {'title' : 'MVC фреймворк '})
 
+
+    def logout(self, request, response):
+        response.set_cookie('token', '', -1, '/')
+        response.status_code = 302
+        response.location = request.referer
+
     
-
-
