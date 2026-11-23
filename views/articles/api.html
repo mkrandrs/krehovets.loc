@@ -1,0 +1,79 @@
+
+<h1>{{ h1 }}</h1>
+
+<p id="api-status">Загрузка статей...</p>
+
+<div id="api-articles" class="row g-3"></div>
+
+<script>
+    const container = document.getElementById('api-articles');
+    const status = document.getElementById('api-status');
+
+    fetch('/api/articles')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка HTTP: ' + response.status);
+            }
+
+            return response.json();
+        })
+        .then(data => {
+            const articles = data.articles;
+
+            status.textContent = 'Количество статей: ' + articles.length;
+
+            if (articles.length === 0) {
+                status.textContent = 'Статей пока нет.';
+                return;
+            }
+
+            articles.forEach(article => {
+                const column = document.createElement('div');
+                column.className = 'col-md-6 col-lg-4';
+
+                const card = document.createElement('div');
+                card.className = 'card h-100';
+
+                if (article.img) {
+                    const image = document.createElement('img');
+                    image.src = article.img;
+                    image.alt = article.name || 'Изображение статьи';
+                    image.className = 'card-img-top';
+                    image.style.height = '220px';
+                    image.style.objectFit = 'cover';
+                    card.appendChild(image);
+                }
+
+                const body = document.createElement('div');
+                body.className = 'card-body';
+
+                const title = document.createElement('h2');
+                title.className = 'card-title h5';
+                title.textContent = article.name || 'Без названия';
+
+                const text = document.createElement('p');
+                text.className = 'card-text';
+                text.textContent = article.text || '';
+
+                const author = document.createElement('p');
+                author.className = 'text-muted';
+                author.textContent = 'ID автора: ' + (article.author_id ?? 'не указан');
+
+                const id = document.createElement('p');
+                id.textContent = 'ID статьи: ' + article.id;
+
+                const link = document.createElement('a');
+                link.href = '/articles/' + encodeURIComponent(article.id);
+                link.className = 'btn btn-primary';
+                link.textContent = 'Подробнее';
+
+                body.append(title, text, author, id, link);
+                card.appendChild(body);
+                column.appendChild(card);
+                container.appendChild(column);
+            });
+        })
+        .catch(error => {
+            status.textContent = 'Ошибка загрузки статей: ' + error.message;
+        });
+</script>

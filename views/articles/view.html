@@ -1,0 +1,16 @@
+
+<h2>{{ article.get_name() }}</h2>
+<p>{{ article.get_text() }}</p>
+
+{% if article.get_img() %}
+    <p>
+        <img
+            src="{{ article.get_img() }}"
+            alt="{{ article.get_name() }}"
+            style="max-width: 100%; height: auto;"
+        >
+    </p>
+{% endif %}
+
+<p>Автор: {{ article.get_author().get_nickname() }}</p>
+<a href="/articles">Все статьи</a>

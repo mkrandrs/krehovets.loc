@@ -1,0 +1,53 @@
+<div class="container py-4" style="max-width: 850px;">
+    <h1 class="mb-4">Создание статьи</h1>
+
+    {% if form_error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ form_error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="/articles/add" enctype="multipart/form-data" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <div class="mb-3">
+            <label for="article-name" class="form-label">Название статьи</label>
+            <input
+                id="article-name"
+                class="form-control"
+                type="text"
+                name="name"
+                value="{{ name or '' }}"
+                maxlength="255"
+                required
+            >
+        </div>
+
+        <div class="mb-3">
+            <label for="article-text" class="form-label">Описание статьи</label>
+            <textarea
+                id="article-text"
+                class="form-control"
+                name="text"
+                rows="10"
+                required
+            >{{ text or '' }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="article-img" class="form-label">Изображение (JPG/JPEG, до 5 МБ)</label>
+            <input
+                id="article-img"
+                class="form-control"
+                type="file"
+                name="img"
+                accept=".jpg,.jpeg,image/jpeg"
+                required
+            >
+            <div class="form-text">Изображение обязательно. Максимальный размер — 5 МБ.</div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Сохранить статью</button>
+    </form>
+</div>

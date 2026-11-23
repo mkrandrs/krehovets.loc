@@ -1,0 +1,9 @@
+<h1>Удаление статьи</h1>
+
+<p>Вы уверены, что хотите удалить статью <b>{{ article.get_name() }}</b>?</p>
+
+<form method="POST" action="/articles/{{ article.get_id() }}/delete">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <button type="submit">Да, удалить</button>
+    <a href="/article/{{ article.get_id() }}">Отмена</a>
+</form>
